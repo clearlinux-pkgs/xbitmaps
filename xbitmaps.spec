@@ -4,7 +4,7 @@
 #
 Name     : xbitmaps
 Version  : 1.1.2
-Release  : 4
+Release  : 5
 URL      : https://www.x.org/releases/individual/data/xbitmaps-1.1.2.tar.gz
 Source0  : https://www.x.org/releases/individual/data/xbitmaps-1.1.2.tar.gz
 Summary  : Bitmaps that are shared between X applications
