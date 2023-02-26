@@ -5,19 +5,23 @@
 # Source0 file verified with key 0xCFDF148828C642A7 (alanc@freedesktop.org)
 #
 Name     : xbitmaps
-Version  : 1.1.2
-Release  : 7
-URL      : https://www.x.org/releases/individual/data/xbitmaps-1.1.2.tar.gz
-Source0  : https://www.x.org/releases/individual/data/xbitmaps-1.1.2.tar.gz
-Source1  : https://www.x.org/releases/individual/data/xbitmaps-1.1.2.tar.gz.sig
+Version  : 1.1.3
+Release  : 8
+URL      : https://www.x.org/releases/individual/data/xbitmaps-1.1.3.tar.gz
+Source0  : https://www.x.org/releases/individual/data/xbitmaps-1.1.3.tar.gz
+Source1  : https://www.x.org/releases/individual/data/xbitmaps-1.1.3.tar.gz.sig
 Summary  : Bitmaps that are shared between X applications
 Group    : Development/Tools
 License  : HPND ICU
 Requires: xbitmaps-license = %{version}-%{release}
 BuildRequires : pkgconfig(xorg-macros)
+# Suppress stripping binaries
+%define __strip /bin/true
+%define debug_package %{nil}
 
 %description
-No detailed description available
+This package contains bitmaps commonly used in X.Org applications.
+The bitmaps are in the X BitMap (XBM) format.
 
 %package dev
 Summary: dev components for the xbitmaps package.
@@ -38,23 +42,23 @@ license components for the xbitmaps package.
 
 
 %prep
-%setup -q -n xbitmaps-1.1.2
-cd %{_builddir}/xbitmaps-1.1.2
+%setup -q -n xbitmaps-1.1.3
+cd %{_builddir}/xbitmaps-1.1.3
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1604356746
+export SOURCE_DATE_EPOCH=1677371565
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -66,10 +70,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1604356746
+export SOURCE_DATE_EPOCH=1677371565
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/xbitmaps
-cp %{_builddir}/xbitmaps-1.1.2/COPYING %{buildroot}/usr/share/package-licenses/xbitmaps/7c4b6cf60b1563a123a242c3b1da1bd5c8288ce7
+cp %{_builddir}/xbitmaps-%{version}/COPYING %{buildroot}/usr/share/package-licenses/xbitmaps/7c4b6cf60b1563a123a242c3b1da1bd5c8288ce7 || :
 %make_install
 
 %files
